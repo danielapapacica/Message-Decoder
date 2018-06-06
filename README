@@ -1,0 +1,49 @@
+Papacica Elena-Daniela
+323 CB
+
+                                    Tema 2 - IOCLA
+
+
+
+
+        Am folosit o functie pentru aflarea lungimii unui sir de caractere(STR_LENGTH) care m-a ajutat sa ma deplasez prin intregul string primit din input pentru a ajunge la fiecare subsir corespondent unui task. De exemplu: pentru a ajunge la adresa de inceput a stringului pentru taskul 2 am aflat lungimea primelor 2 string-uri de la taskul 1 si am adaugat registrului ecx lungimile acestora.
+
+
+    Task 1
+
+    Am folosit o functie (xor_strings) care se deplaseaza byte cu byte prin ambele stringuri (strigul meu si cheia) si face xor intre cele 2 pe fiecare byte. Pentru aceasta, functia utilizeaza o bucla(xor_on_byte) care se opreste atunci cand da de un byte egal cu 0 (sfarsitul stringului). Rezultatul pe fiecare byte este plasat in stringul care trebuie decodificat.
+
+
+    Task 2
+
+    Am folosit o functie (rolling_xor) care strabate stringul byte cu byte de la sfarsit spre inceput. Fiecare byte din string intalnit este suprascris cu rezultatul operatiei xor dintre byte-ul insusi si byte-ul situat pe pozitia mai mica cu o unitate, adica fix urmatorul byte ce urmeaza sa fie vizitat. Pentru aceasta am utilizat o bucla (rol_xor_on_byte) care se opreste atunci cand intalneste un byte egal cu 0.
+
+    Task 3
+
+    Pentru acest task am folosit intai o functie(convert_binary) care face conversia stringului si cheii din caractere ASCII care reprezinta numere in hexazecimal in caractere binare. Dupa ce am realizat conversia am apelat functia xor_strings folosita si la taskul 1.
+    Conversia stringurilor:
+    Functia ia fiecare pereche de caractere consectutive. Atat primul cat si al doilea caracter din pereche sunt convertite din cod ASCII in valoarile pe care acestea ar trebui sa le reprezinte (utilizand salturi catre label-urile litere_task3 si cifre_task3, specifice pentru conversia unei valori mai mici sau mai mari ca 9). Dupa ce primul caracter este convertit, este inmultit cu 16 urmand sa i se adauge valoarea celui de al doilea. In acest fel numarul rezultat reprezinta valoarea exprimata de cele 2 caractere citite ca un numar in baza 16. Fiecare rezultat este plasat pe urmatorul byte fata de cel in care se plasase rezultatul anterior. Cu alte cuvinte stringul rezultat va avea jumatate din lungimea celui initial.
+
+
+    Task 4
+
+    Pentru acest task utilizez o functie (base32_decode). Aceasta citeste caracterele din string si le converteste in valoarea din tabelul cu indecsi ai alfabetului (codul ASCII este transformat in valoarea din tabel pentru litera/cifra/semnul egal corespondent). Valoarea aflata sufera impartiri succesive pentru aflarea celor 5 biti care o compun. Acestia sunt pusi unul cate unul pe stiva, in ordine inversa (alocarea dinamica pentru stiva este facuta in prealabil). Practic stiva va contine valori consecutive de 0 si 1 la finalul procesarii tuturor caracterelor din string si a punerii bitilor pe stiva.
+    Urmeaza scoaterea bitilor de pe stiva, 8 cate 8. Valoarea rezultata in urma compunerii celor 8 biti este introdusa in string pe pozitia corespondenta.
+
+
+    Task 5
+
+    Pentru taskul 5 folosesc o functie(bruteforce_singlebyte_xor). Aceasta foloseste o bucla (try_keys) care testeaza corectitudinea fiecarei chei in parte(0,255). Pentru fiecare cheie, fiecare byte din string sufera operatia xor cu cheia testata in acel moment. La fiecare pas este testata echivalenta rezultatului cu litera "f". Daca operatia xor pe byte-ul respectiv va returna "f", se sare la label-ul "found_f" care testeaza si existenta urmatoarelor litere. Cand substringul a fost gasit se iese din bucla. Cu noua cheie gasita se apeleaza o noua functie(xor_with_byte_key) care decodifica intreg stringul.
+
+
+    Task 6
+ 
+    Pentru task-ul 6 am o functie care creeaza tabelul de substitutie si una care efectueaza inlocuirile in string conform tabelului.
+
+    Deducerea tabelului de substitutie:
+    Am folosit comanda fgrep din terminal pe un fisier care continea textul aferent taskului pentru a determina frecventa fiecarui caracter.
+    Am ales sa inlocuiesc caracterul care se regasea cel mai frecvent("c") cu caracterul spatiu " ". Am fost destul de sigura pe aceasta deducere deorece existau anumite grupuri de caractere care se repetau in text. Acestea prezentau la margini caracterul "c" (de exemplu regaseam des in text gruparea "cky c"). Am ales apoi sa inlocuiesc celelalte caractere fix in ordinea frecventei. De exemplu al doilea cel mai intalnit caracter era " ", pe care l-am inlocuit cu "e", urmand "k" pe care l-am inlocuit cu "t". Faptul ca regaseam "cky c" extrem de des in text m-a facut sa ma gandesc ca aceasta grupare ar trebui sa fie cuvantul "the". De asemenea prin inlocuirea tuturor caracterelor dupa frecventa si prin alte cateva deduceri, mai ales gandidu-ma la cuvintele scurte si des intalnite (prepozitii, conjunctii, articole, pronume), am reusit sa obtin pas cu pas fiecare litera.
+    De exemplu: regaseam cuvinte formate doar din "i" si "q". M-am gandit ca unul din ele inlocuieste caracterul "a", referindu-se la articolul "a". L-am ales pe "q" ca fiind inlocuitor al lui "a" deoarece in felul asta as fi regasit in text si cuvintele "an","and". Din contextul altor cuvinte de legatura  am dedus usor literele "o", "f", "s", "n", "r", etc.
+
+
+
